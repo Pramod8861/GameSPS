@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWc7EkRfpFgEBZfsx3Z_te1y7bt-puLpGqQg&s">
+    <title>Stone Paper Scissors Play</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="loading-bar">
+        <div class="bar"></div>
+    </div>
+    <div class="container active" id="mode-selection">
+        <h1>Stone Paper Scissors</h1>
+        <div class="game-mode">
+            <button id="play-computer" class="mode-button">Play vs Computer</button>
+            <button id="play-friend" class="mode-button">Play vs Friend</button>
+        </div>
+    </div>
+    <div class="container" id="name-input">
+        <h1>Enter Player Names</h1>
+        <div class="name-input">
+            <div class="player-name">
+                <input type="text" id="player1-name-input" placeholder="Enter Player 1 name">
+
+            </div>
+            <div class="player-name" id="player2-name-container">
+                <input type="text" id="player2-name-input" placeholder="Enter Player 2 name">
+            </div>
+            <button id="start-game" class="start-button">Start Game</button>
+        </div>
+    </div>
+    <div class="container" id="game-container">
+        <h1>Stone Paper Scissors</h1>
+        <div class="profile-section">
+            <div class="profile" id="player1-profile">
+                <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Player 1">
+                <p id="player1-name">Player 1</p>
+                <p id="player1-score">0</p>
+            </div>
+            <div class="profile" id="player2-profile">
+                <img src="https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE=" alt="Player 2">
+                <p id="player2-name">Player 2</p>
+                <p id="player2-score">0</p>
+            </div>
+        </div>
+        <div class="game-board">
+            <div class="player1-choice">
+                <button class="choice" data-choice="stone">Stone</button>
+                <button class="choice" data-choice="paper">Paper</button>
+                <button class="choice" data-choice="scissors">Scissors</button>
+            </div>
+            <div class="player2-choice">
+                <button class="choice" data-choice="stone">Stone</button>
+                <button class="choice" data-choice="paper">Paper</button>
+                <button class="choice" data-choice="scissors">Scissors</button>
+            </div>
+        </div>
+        <div class="result">
+            <p id="result-text"></p>
+        </div>
+        <button id="reset-game" class="reset-button">Reset Game</button>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingBar = document.getElementById('loading-bar');
+            const modeSelection = document.getElementById('mode-selection');
+            const nameInput = document.getElementById('name-input');
+            const gameContainer = document.getElementById('game-container');
+            const playComputerButton = document.getElementById('play-computer');
+            const playFriendButton = document.getElementById('play-friend');
+            const startGameButton = document.getElementById('start-game');
+            const player1NameInput = document.getElementById('player1-name-input');
+            const player2NameInput = document.getElementById('player2-name-input');
+            const player1Choices = document.querySelector('.player1-choice');
+            const player2Choices = document.querySelector('.player2-choice');
+            const resultText = document.getElementById('result-text');
+            const resetButton = document.getElementById('reset-game');
+            const player1NameElement = document.getElementById('player1-name');
+            const player2NameElement = document.getElementById('player2-name');
+            const player1ScoreElement = document.getElementById('player1-score');
+            const player2ScoreElement = document.getElementById('player2-score');
+            const player1PointElement = document.getElementById('player1-point');
+            const player2PointElement = document.getElementById('player2-point');
+        
+            let playMode = 'computer';
+            let player1Choice = null;
+            let player1Score = 0;
+            let player2Score = 0;
+        
+            // Simulate loading
+            setTimeout(() => {
+                loadingBar.style.display = 'none';
+                modeSelection.classList.add('active');
+            }, 2000);
+        
+            playComputerButton.addEventListener('click', () => {
+                playMode = 'computer';
+                modeSelection.classList.remove('active');
+                nameInput.classList.add('active');
+                player2NameElement.textContent = 'Computer';
+                player2NameInput.style.display = 'none';
+            });
+        
+            playFriendButton.addEventListener('click', () => {
+                playMode = 'friend';
+                modeSelection.classList.remove('active');
+                nameInput.classList.add('active');
+                player2NameElement.textContent = 'Player 2';
+                player2NameInput.style.display = 'block';
+            });
+        
+            startGameButton.addEventListener('click', () => {
+                const player1Name = player1NameInput.value.trim();
+                const player2Name = playMode === 'friend' ? player2NameInput.value.trim() : 'Computer';
+        
+                if (player1Name === '' || (playMode === 'friend' && player2Name === '')) {
+                    alert('Please enter both names.');
+                    return;
+                }
+        
+                player1NameElement.textContent = player1Name;
+                player2NameElement.textContent = player2Name;
+                nameInput.classList.remove('active');
+                gameContainer.classList.add('active');
+                player1Choices.classList.add('active');
+            });
+        
+            document.querySelectorAll('.choice').forEach(choice => {
+                choice.addEventListener('click', () => {
+                    if (playMode === 'computer') {
+                        player1Choice = choice.dataset.choice;
+                        playComputer(player1Choice);
+                    } else {
+                        if (!player1Choice) {
+                            player1Choice = choice.dataset.choice;
+                            player1Choices.classList.remove('active');
+                            player2Choices.classList.add('active');
+                            resultText.textContent = `${player1NameElement.textContent} has chosen. ${player2NameElement.textContent}, it's your turn.`;
+                        } else {
+                            const player2Choice = choice.dataset.choice;
+                            playFriend(player1Choice, player2Choice);
+                            player1Choice = null;
+                            player2Choices.classList.remove('active');
+                            player1Choices.classList.add('active');
+                        }
+                    }
+                });
+            });
+        
+            resetButton.addEventListener('click', resetGame);
+        
+            function playComputer(playerChoice) {
+                const computerChoice = getRandomChoice();
+                const winner = determineWinner(playerChoice, computerChoice);
+                displayResult(playerChoice, computerChoice, winner);
+            }
+        
+            function playFriend(player1Choice, player2Choice) {
+                const winner = determineWinner(player1Choice, player2Choice);
+                displayResult(player1Choice, player2Choice, winner);
+            }
+        
+            function getRandomChoice() {
+                const choices = ['stone', 'paper', 'scissors'];
+                return choices[Math.floor(Math.random() * choices.length)];
+            }
+        
+            function determineWinner(choice1, choice2) {
+                if (choice1 === choice2) return 'draw';
+                if (
+                    (choice1 === 'stone' && choice2 === 'scissors') ||
+                    (choice1 === 'paper' && choice2 === 'stone') ||
+                    (choice1 === 'scissors' && choice2 === 'paper')
+                ) {
+                    return 'player1';
+                } else {
+                    return 'player2';
+                }
+            }
+        
+            function displayResult(choice1, choice2, winner) {
+                let resultMessage;
+                if (winner === 'draw') {
+                    resultMessage = `It's a draw! Both chose ${choice1}.`;
+                } else if (winner === 'player1') {
+                    resultMessage = `${player1NameElement.textContent} wins! ${choice1} beats ${choice2}.`;
+                    player1Score++;
+                    player1ScoreElement.textContent = player1Score;
+                    player1PointElement.textContent = '+1';
+                    showCelebration(player1NameElement.textContent);
+                } else {
+                    resultMessage = `${player2NameElement.textContent} wins! ${choice2} beats ${choice1}.`;
+                    player2Score++;
+                    player2ScoreElement.textContent = player2Score;
+                    player2PointElement.textContent = '+1';
+                    showCelebration(player2NameElement.textContent);
+                }
+                resultText.textContent = resultMessage;
+        
+                setTimeout(() => {
+                    player1PointElement.textContent = '';
+                    player2PointElement.textContent = '';
+                }, 1000);
+            }
+        
+            function showCelebration(winnerName) {
+                const celebrationElement = document.createElement('div');
+                celebrationElement.classList.add('celebration');
+                celebrationElement.innerHTML = `
+                    <p>Congratulations <span class="winner-name">${winnerName}</span>!</p>
+                    <img src="https://i.pinimg.com/originals/b4/72/a1/b472a187696137c70e6456450b99c351.gif" alt="Confetti">
+                    <img src="https://i.gifer.com/origin/8c/8ca54fd5f1dffe9143c22d1ce0e95410_w200.gif" alt="Fireworks">
+                    <img src="https://i.pinimg.com/originals/1d/d0/4c/1dd04cdc2b9981ebdfceffa927a7b053.gif" alt="Happy Face">
+                `;
+        
+                document.body.appendChild(celebrationElement);
+        
+                setTimeout(() => {
+                    celebrationElement.remove();
+                }, 3000);
+        
+                for (let i = 0; i < 10; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.backgroundColor = getRandomColor();
+                    document.body.appendChild(confetti);
+        
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 2000);
+                }
+            }
+        
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+        
+            function resetGame() {
+                player1Score = 0;
+                player2Score = 0;
+                player1ScoreElement.textContent = '0';
+                player2ScoreElement.textContent = '0';
+                resultText.textContent = '';
+            }
+        });
+        
+    </script>
+</body>
+</html>

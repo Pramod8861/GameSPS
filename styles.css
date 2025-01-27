@@ -1,0 +1,802 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Loading Bar */
+#loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(226, 230, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#loading-bar .bar {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #5f79ee;
+    border-top: 6px solid #11dde7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Container Styles */
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    display: none;
+}
+
+.container.active {
+    display: block;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.mode-button, .start-button, .reset-button {
+    background: #764ba2;
+    color: white;
+    border: rgba(211, 109, 197, 0.828) solid 2px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.5s;
+}
+
+.mode-button:hover, .start-button:hover, .reset-button:hover {
+    background-color: #12eadf;
+    color: #000000;
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    transition: transform 0.5s ease;
+}
+
+.profile img:hover {
+    transform: scale(1.3);
+}
+
+.profile p {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+/* Game Board */
+.game-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.choice {
+    cursor: pointer;
+    margin: 0 10px;
+    perspective: 1000px;
+}
+
+.choice img {
+    width: 120px;
+    height: 120px;
+    transition: transform 0.3s;
+}
+
+.choice:hover img {
+    transform: rotateY(360deg);
+}
+
+.result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    color: #764ba2;
+    font-weight: bold;
+}
+
+/* Player Points */
+.player-points {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.player-points p {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Celebration Section */
+.celebration {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.celebration img {
+    width: 100px;
+    margin: 10px;
+}
+
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    z-index: 999;
+    pointer-events: none;
+    animation: confetti-fall 2s ease-out infinite;
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100vh) rotateZ(0deg); }
+    100% { transform: translateY(100vh) rotateZ(1080deg); }
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .choice img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .profile p {
+        font-size: 16px;
+    }
+}
+/* Original styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(35deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.profile img:hover {
+    transform: scale(1.3); /* Scale up the image slightly on hover */
+    transition: transform 0.5s ease; /* Smooth transition for scaling */
+}
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-mode, .name-input {
+    margin-bottom: 20px;
+}
+
+.mode-button, .start-button, .reset-button {
+    background: #764ba2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.mode-button:hover, .start-button:hover, .reset-button:hover {
+    background: #667eea;
+}
+
+.profile-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.profile p {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.game-board {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.choice {
+    margin: 0 10px;
+    perspective: 1000px;
+}
+
+.choice img {
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.choice:hover img {
+    transform: rotateY(360deg);
+}
+
+.result p {
+    font-size: 24px;
+    color: #764ba2;
+    font-weight: bold;
+}
+
+.reset-button {
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .choice img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .profile p {
+        font-size: 16px;
+    }
+}
+.container {
+    display: none;
+}
+
+.container.active {
+    display: block;
+}
+
+.game-board {
+    display: flex;
+    justify-content: space-around;
+}
+
+.player1-choice,
+.player2-choice {
+    display: none;
+}
+
+.player1-choice.active,
+.player2-choice.active {
+    display: flex;
+    justify-content: space-around;
+}
+
+.choice {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.result {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.reset-button {
+    display: block;
+    margin: 20px auto;
+}
+
+.celebration {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 9999;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://i.pinimg.com/originals/3b/f2/f4/3bf2f45865bc4a63a663611ea357de4c.gif'); /* Replace with the actual URL of your GIF */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+
+#loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(226, 230, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index:9999;
+}
+
+#loading-bar .bar {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #5f79ee;
+    border-top: 6px solid #11dde7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.container {
+    text-align: center;
+    background: rgba(175, 205, 148, 0.3);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 90%;
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-mode, .name-input {
+    margin-bottom: 20px;
+}
+
+.mode-button, .start-button, .reset-button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #008CBA; /* Default background color */
+    color: white; /* Default text color */
+    padding: 10px 20px;
+    border: rgba(211, 109, 197, 0.828) solid 2px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 15px;
+    transition: background-color 0.3s, color 0.5s; 
+}
+
+.mode-button:hover, .start-button:hover, .reset-button:hover {
+    background-color: #12eadf; /* Darker shade on hover */
+    color: #000000; /* White text color on hover */
+}
+
+.profile-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.profile p {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.game-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.player1-choice,
+.player2-choice {
+    display: none;
+}
+
+.player1-choice.active,
+.player2-choice.active {
+    display: flex;
+    justify-content: space-around;
+}
+
+.choice {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.choice img {
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.choice:hover img {
+    transform: rotateY(360deg);
+}
+
+.result {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.result p {
+    font-size: 24px;
+    color: #764ba2;
+    font-weight: bold;
+}
+
+.reset-button {
+    display: block;
+    margin: 20px auto;
+}
+
+.celebration img {
+    width: 100px;
+    margin: 10px;
+}
+
+.player-points {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.player-points p {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+.loading-text {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+
+.confetti:nth-child(2) { animation-delay: 0.2s; }
+.confetti:nth-child(3) { animation-delay: 0.4s; }
+.confetti:nth-child(4) { animation-delay: 0.6s; }
+.confetti:nth-child(5) { animation-delay: 0.8s; }
+.confetti:nth-child(6) { animation-delay: 1s; }
+.confetti:nth-child(7) { animation-delay: 1.2s; }
+.confetti:nth-child(8) { animation-delay: 1.4s; }
+.confetti:nth-child(9) { animation-delay: 1s; }
+.confetti:nth-child(10) { animation-delay: 1.2s; }
+.confetti:nth-child(11) { animation-delay: 1.4s; }
+
+/* Add this to your existing styles.css or inside <style> tags in your <head> */
+.celebration {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #ffcc00; /* Adjust color if needed */
+    border-radius: 50%;
+    z-index: 999;
+    pointer-events: none;
+    animation: confetti-fall 2s ease-out infinite;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotateZ(0deg);
+    }
+    100% {
+        transform: translateY(100vh) rotateZ(1080deg);
+    }
+}
+
+strong {
+    font-weight: bold;
+    /* Add any additional styling for <strong> tags here */
+}
+
+/* Global button styles */
+button {
+    background-color: #05212a; /* Default background color */
+    color: white; /* Default text color */
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for background and text color */
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #005A8C; /* Darker shade on hover */
+    color: #fff; /* White text color on hover */
+}
+
+/* Container styles */
+.container {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.container.active {
+    border-color: #00FF00; /* Initial border color */
+    animation: border-animation 5s infinite; /* Continuous border color animation */
+}
+
+@keyframes border-animation {
+    0% { border-color: #00FF00; } /* Start with green */
+    25% { border-color: #FFD700; } /* Change to gold */
+    50% { border-color: #FF6347; } /* Change to tomato */
+    75% { border-color: #00BFFF; } /* Change to deep sky blue */
+    100% { border-color: #00FF00; } /* Back to green */
+}
+
+/* Player name input styles */
+.player-name {
+    display: inline-block;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.player-name input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    transition: border-color 0.3s, color 0.3s;
+    pointer-events: auto; /* Ensure interaction is allowed */
+  
+}
+
+.player-name input[type="text"]::placeholder {
+    color: #999; /* Placeholder text color */
+}
+
+.player-name input[type="text"]:hover,
+.player-name input[type="text"]:focus {
+    border-color: #008CBA; /* Border color on hover or focus */
+    color: #333; /* Text color on hover or focus */
+    pointer-events: auto; /* Ensure interaction is allowed */
+   
+}
+
+
+
+@keyframes border-pulse {
+    0% {
+        border-color: #00FF00;
+    }
+    25% {
+        border-color: #FFD700;
+    }
+    50% {
+        border-color: #FF6347;
+    }
+    75% {
+        border-color: #00BFFF;
+    }
+    100% {
+        border-color: #69fd4f;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+    }
+
+    .profile img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile p {
+        font-size: 16px;
+    }
+
+    .game-board {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .choice img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .result p {
+        font-size: 20px;
+    }
+
+    .player-points p {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .mode-button, .start-button, .reset-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .profile img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .profile p {
+        font-size: 14px;
+    }
+
+    .game-board {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .choice img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .result p {
+        font-size: 18px;
+    }
+
+    .player-points p {
+        font-size: 18px;
+    }
+}
+@keyframes confetti-fall {
+    0% { transform: translate(0, -100vh) rotate(0); }
+    100% { transform: translate(50px, 100vh) rotate(1080deg); }
+}
+.container.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ccc;
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
